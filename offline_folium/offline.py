@@ -65,7 +65,7 @@ class CssLink(Link):
 
 
 import folium
-
+import folium.plugins as plugins
 folium.folium._default_js = [
     (name, os.path.join(dest_path, os.path.basename(url)))
     for (name, url) in folium.folium._default_js
@@ -74,6 +74,21 @@ folium.folium._default_css = [
     (name, os.path.join(dest_path, os.path.basename(url)))
     for (name, url) in folium.folium._default_css
 ]
+
+#add plugin files as well
+for plugin in plugins.__all__:   
+    if hasattr(getattr(plugins,plugin),'default_js'):
+        getattr(plugins,plugin).default_js = [
+            (name, os.path.join(dest_path, os.path.basename(url)))
+            for (name, url) in getattr(plugins,plugin).default_js 
+        ]
+    if hasattr(getattr(plugins,plugin),'default_css'):
+        getattr(plugins,plugin).default_css = [
+            (name, os.path.join(dest_path, os.path.basename(url)))
+            for (name, url) in getattr(plugins,plugin).default_css
+        ]
+
+
 folium.Map.default_js = folium.folium._default_js
 folium.Map.default_css = folium.folium._default_css
 
