@@ -10,4 +10,5 @@ setup(
     packages=find_packages('.'),    
     install_requires=['folium'],
     include_package_data=True,
+    package_data={'offline_folium': ['offline_folium/local/*']},  
 )
